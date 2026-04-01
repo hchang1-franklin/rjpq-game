@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多人樓層數字選擇遊戲</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== 登入畫面 ===== -->
+  <div id="login-screen" class="screen">
+    <div class="login-box">
+      <h1>多人樓層數字選擇遊戲</h1>
+
+      <div class="form-group">
+        <label for="nickname">玩家暱稱 <span class="required">*</span></label>
+        <input type="text" id="nickname" placeholder="請輸入暱稱" maxlength="20" />
+      </div>
+
+      <div class="form-group">
+        <label for="room-id">房間號碼</label>
+        <div class="room-row">
+          <input type="text" id="room-id" placeholder="7 位數字房間號碼" maxlength="7" inputmode="numeric" pattern="[0-9]*" />
+          <button id="btn-create-room" class="btn btn-secondary">建立房間</button>
+        </div>
+      </div>
+
+      <div id="login-error" class="error-msg hidden"></div>
+
+      <button id="btn-enter" class="btn btn-primary">進入遊戲</button>
+    </div>
+  </div>
+
+  <!-- ===== 遊戲畫面 ===== -->
+  <div id="game-screen" class="screen hidden">
+
+    <!-- 頂部資訊列 -->
+    <div class="top-bar">
+      <span class="room-info">房間號碼：<strong id="display-room-id"></strong></span>
+      <button id="btn-reset" class="btn btn-danger">重設</button>
+    </div>
+
+    <div class="game-body">
+
+      <!-- 玩家列表 -->
+      <div class="panel player-panel">
+        <h2>玩家列表</h2>
+
+        <!-- 顏色選擇（給自己用） -->
+        <div class="color-picker-section">
+          <span>選擇顏色：</span>
+          <div class="color-swatches">
+            <div class="swatch" style="background:#FF7575" data-color="#FF7575" title="#FF7575"></div>
+            <div class="swatch" style="background:#FF79BC" data-color="#FF79BC" title="#FF79BC"></div>
+            <div class="swatch" style="background:#97CBFF" data-color="#97CBFF" title="#97CBFF"></div>
+            <div class="swatch" style="background:#FFC78E" data-color="#FFC78E" title="#FFC78E"></div>
+          </div>
+        </div>
+
+        <!-- 玩家列表頭部 -->
+        <div class="player-list-header">
+          <span class="col-name">暱稱</span>
+          <span class="col-color">顏色</span>
+          <span class="col-floors">
+            <!-- 10F → 1F 由上到下，顯示欄位標籤 -->
+            <span class="floor-labels">
+              <span>10</span><span>9</span><span>8</span><span>7</span><span>6</span>
+              <span class="gap-label"></span>
+              <span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+            </span>
+          </span>
+        </div>
+
+        <!-- 玩家列 -->
+        <div id="player-list"></div>
+      </div>
+
+      <!-- 樓層遊戲區 -->
+      <div class="panel floor-panel">
+        <h2>樓層選擇</h2>
+        <div id="floor-grid">
+          <!-- 由 JS 渲染，從 10 到 1 -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 確認對話框 -->
+  <div id="overlay" class="overlay hidden">
+    <div class="dialog">
+      <p id="dialog-msg"></p>
+      <div class="dialog-buttons">
+        <button id="dialog-yes" class="btn btn-primary">是</button>
+        <button id="dialog-no" class="btn btn-secondary">否</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (compat version) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script src="game.js"></script>
+</body>
+</html>
